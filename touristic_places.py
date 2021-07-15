@@ -3,6 +3,7 @@
 import requests
 from bs4 import BeautifulSoup
 
+
 def parse_webpage(url: str):
     """Parses webpage and and returns the text of webpage."""
     html_text = requests.get(url).text
@@ -27,10 +28,20 @@ def places_veterdoit(soup):
     return places_lst
 
 
-def places_andy(soup):
-    """Returns a list of places from a soup of andy."""
-    print(soup.find_all('a'))
+def combine_places():
+    """Combines all the results to a set."""
+    lst_places_1 = places_veterdoit(parse_webpage('https://veterdoit.com/10-nezvychaynykh-sil-ukrainy-iaki-varto-vidvidaty/'))
+    lst_places_2 = places_veterdoit(parse_webpage('https://veterdoit.com/tsikavi-mistsia-ukrainy-iaki-vas-vraziat/'))
+    all_places = set(lst_places_1) | set(lst_places_2)
+    return all_places
 
-# print(places_andy(parse_webpage('https://andy-travel.com.ua/top-60-naycikavishyh-kutochkiv-ukrayiny')))
-print(places_veterdoit(parse_webpage('https://veterdoit.com/10-nezvychaynykh-sil-ukrainy-iaki-varto-vidvidaty/')))
-print(places_veterdoit(parse_webpage('https://veterdoit.com/tsikavi-mistsia-ukrainy-iaki-vas-vraziat/')))
+
+def write_file():
+    """Writes a file with the places."""
+    places = combine_places()
+    with open('places.txt', 'a', encoding='utf-8') as file_t:
+        for place in places:
+            file_t.write(f'{place}\n')
+
+
+# write_file()
