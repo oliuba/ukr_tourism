@@ -6,7 +6,7 @@ from googlesearch import search
 
 def info(start: str) -> str:
     """
-    Return site-url, where you can buy tickets.
+    Return site-url, with information about given place.
     """
     query = f"{start}"
     res = search(query, lang='ua', stop=1)
@@ -14,4 +14,4 @@ def info(start: str) -> str:
         return i
 
 
-print(info('хмельницький'))
+# print(info('хмельницький'))
